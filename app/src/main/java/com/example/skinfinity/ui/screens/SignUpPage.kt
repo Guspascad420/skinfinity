@@ -64,7 +64,6 @@ fun SignUpPage() {
                         .padding(horizontal = 15.dp),
                     shape = RoundedCornerShape(20.dp)
                 ) {
-
                 }
                 Card(
                     modifier = Modifier
@@ -82,7 +81,6 @@ fun SignUpPage() {
                     }
                 }
             }
-
         }
     }
 }

@@ -13,15 +13,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.skinfinity.R
 import com.example.skinfinity.ui.theme.OpenSans
-import com.example.skinfinity.ui.theme.SkinfinityTheme
 
 @Composable
-fun WelcomePage() {
+fun WelcomePage(
+    navigateToSignUp: () -> Unit
+) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Row(
             Modifier
@@ -60,7 +60,7 @@ fun WelcomePage() {
         }
         Spacer(Modifier.height(30.dp))
         Button(
-            onClick = { /*TODO*/ },
+            onClick = navigateToSignUp,
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = Color(0xFFFF9999),
                 contentColor = Color.White
@@ -70,13 +70,5 @@ fun WelcomePage() {
         ) {
             Text("GET STARTED")
         }
-    }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun DefaultPreview() {
-    SkinfinityTheme {
-        WelcomePage()
     }
 }
