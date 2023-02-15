@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
-import com.example.skinfinity.ui.screens.WelcomePage
+import com.example.skinfinity.ui.navigation.SkinfinityApp
 import com.example.skinfinity.ui.theme.SkinfinityTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    WelcomePage()
+                    SkinfinityApp()
                 }
             }
         }
