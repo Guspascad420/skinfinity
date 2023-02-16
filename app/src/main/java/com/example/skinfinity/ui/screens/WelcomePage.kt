@@ -22,7 +22,7 @@ import com.example.skinfinity.ui.theme.OpenSans
 fun WelcomePage(
     navigateToSignUp: () -> Unit
 ) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
         Row(
             Modifier
                 .width(220.dp)
