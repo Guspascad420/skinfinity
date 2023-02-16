@@ -12,7 +12,7 @@ import com.example.skinfinity.R
 val OpenSans = FontFamily(
     Font(R.font.open_sans_semibold, FontWeight.SemiBold),
     Font(R.font.open_sans_bold, FontWeight.Bold),
-    Font(R.font.open_sans)
+    Font(R.font.open_sans, FontWeight.Normal)
 )
 
 val Typography = Typography(
