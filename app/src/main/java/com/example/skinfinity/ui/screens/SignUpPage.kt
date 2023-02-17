@@ -19,17 +19,18 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.skinfinity.R
 import com.example.skinfinity.ui.AuthViewModel
 import com.example.skinfinity.ui.theme.OpenSans
-import com.example.skinfinity.ui.theme.SkinfinityTheme
 
 @Composable
-fun SignUpPage(vm: AuthViewModel = viewModel()) {
+fun SignUpPage(
+    vm: AuthViewModel = viewModel(),
+    navigateToLogin: (Int) -> Unit
+) {
     Box(
         Modifier
             .fillMaxSize()
@@ -64,7 +65,7 @@ fun SignUpPage(vm: AuthViewModel = viewModel()) {
                     shape = RoundedCornerShape(20.dp)
                 ) {
                 }
-                SignUpInput(viewModel = vm)
+                SignUpInput(viewModel = vm, navigateToLogin = navigateToLogin)
             }
         }
     }
@@ -84,7 +85,7 @@ fun BackgroundIcon() {
 }
 
 @Composable
-fun SignUpInput(viewModel: AuthViewModel) {
+fun SignUpInput(viewModel: AuthViewModel, navigateToLogin: (Int) -> Unit) {
     Card(
         modifier = Modifier
             .size(width = 600.dp, height = 800.dp)
@@ -103,19 +104,19 @@ fun SignUpInput(viewModel: AuthViewModel) {
                 )
             }
 
-            SignUpField(
+            AuthField(
                 text = viewModel.fullName,
                 onValueChange = { value -> viewModel.fullName = value },
                 id = R.drawable.fluent_person_48_regular,
                 placeholder = "Full Name"
             )
-            SignUpField(
+            AuthField(
                 text = viewModel.email,
                 onValueChange = { value -> viewModel.email = value },
                 id = R.drawable.mdi_light_email,
                 placeholder = "Email"
             )
-            SignUpField(
+            AuthField(
                 text = viewModel.password,
                 onValueChange = { value -> viewModel.password = value },
                 id = R.drawable.carbon_password,
@@ -143,7 +144,7 @@ fun SignUpInput(viewModel: AuthViewModel) {
                 ),
                 shape = RoundedCornerShape(15.dp),
                 modifier = Modifier
-                    .size(width = 150.dp, height = 60.dp)
+                    .size(width = 220.dp, height = 63.dp)
                     .padding(top = 15.dp)
             ) {
                 Text("Register", fontSize = 20.sp)
@@ -158,7 +159,7 @@ fun SignUpInput(viewModel: AuthViewModel) {
                         color = Color(0xFFFF9999),
                         fontFamily = OpenSans
                     ),
-                    onClick = { }
+                    onClick = navigateToLogin
                 )
             }
 
@@ -167,7 +168,7 @@ fun SignUpInput(viewModel: AuthViewModel) {
 }
 
 @Composable
-fun SignUpField(
+fun AuthField(
     text: TextFieldValue,
     onValueChange: (TextFieldValue) -> Unit,
     @DrawableRes id: Int,
@@ -186,12 +187,4 @@ fun SignUpField(
         },
         placeholder = { Text(placeholder, color = Color(0xFF94A3B8), fontFamily = OpenSans) }
     )
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun SignUpPreview() {
-    SkinfinityTheme {
-        SignUpPage()
-    }
 }
