@@ -18,18 +18,23 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.example.skinfinity.R
+import com.example.skinfinity.ui.AuthUiState
 import com.example.skinfinity.ui.AuthViewModel
+import com.example.skinfinity.ui.navigation.Screen
 import com.example.skinfinity.ui.theme.OpenSans
 
 @Composable
 fun SignUpPage(
     vm: AuthViewModel = viewModel(),
-    navigateToLogin: (Int) -> Unit
+    navController: NavHostController
 ) {
     Box(
         Modifier
@@ -65,7 +70,10 @@ fun SignUpPage(
                     shape = RoundedCornerShape(20.dp)
                 ) {
                 }
-                SignUpInput(viewModel = vm, navigateToLogin = navigateToLogin)
+                SignUpInput(
+                    viewModel = vm,
+                    navController = navController
+                )
             }
         }
     }
@@ -85,7 +93,11 @@ fun BackgroundIcon() {
 }
 
 @Composable
-fun SignUpInput(viewModel: AuthViewModel, navigateToLogin: (Int) -> Unit) {
+fun SignUpInput(
+    viewModel: AuthViewModel,
+    navController: NavHostController
+) {
+    val authUiState = viewModel.authUiState
     Card(
         modifier = Modifier
             .size(width = 600.dp, height = 800.dp)
@@ -94,7 +106,6 @@ fun SignUpInput(viewModel: AuthViewModel, navigateToLogin: (Int) -> Unit) {
     ) {
 
         Column(Modifier.padding(top = 25.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-
             Row {
                 Text(
                     "Sign Up",
@@ -137,7 +148,12 @@ fun SignUpInput(viewModel: AuthViewModel, navigateToLogin: (Int) -> Unit) {
             }
 
             Button(
-                onClick = { },
+                onClick = {
+                    viewModel.signUpClick()
+                    if (authUiState != AuthUiState.Error) {
+                        navController.navigate(Screen.Login.route)
+                    }
+                },
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = Color(0xFFFF9999),
                     contentColor = Color.White
@@ -159,7 +175,7 @@ fun SignUpInput(viewModel: AuthViewModel, navigateToLogin: (Int) -> Unit) {
                         color = Color(0xFFFF9999),
                         fontFamily = OpenSans
                     ),
-                    onClick = navigateToLogin
+                    onClick = { navController.navigate(Screen.Login.route) }
                 )
             }
 
@@ -177,14 +193,19 @@ fun AuthField(
     TextField(
         value = text,
         onValueChange = onValueChange,
-        colors = TextFieldDefaults.textFieldColors(backgroundColor = Color.White),
+        colors = TextFieldDefaults.textFieldColors(
+            backgroundColor = Color.White,
+            textColor = MaterialTheme.colors.onSurface
+        ),
         modifier = Modifier.padding(top = 25.dp),
         leadingIcon = {
             Icon(
                 painterResource(id = id),
-                contentDescription = null
+                contentDescription = null,
+                tint = MaterialTheme.colors.onSurface
             )
         },
-        placeholder = { Text(placeholder, color = Color(0xFF94A3B8), fontFamily = OpenSans) }
+        placeholder = { Text(placeholder, color = Color(0xFF94A3B8), fontFamily = OpenSans) },
+        visualTransformation = PasswordVisualTransformation()
     )
 }
