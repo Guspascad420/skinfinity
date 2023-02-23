@@ -7,12 +7,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.skinfinity.ui.navigation.SkinfinityApp
 import com.example.skinfinity.ui.theme.SkinfinityTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installSplashScreen()
         setContent {
             SkinfinityTheme {
                 // A surface container using the 'background' color from the theme

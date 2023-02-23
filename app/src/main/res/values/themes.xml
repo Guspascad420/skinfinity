@@ -4,4 +4,9 @@
     <style name="Theme.Skinfinity" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:statusBarColor">@color/purple_700</item>
     </style>
+    <style name="Theme.AppSplash" parent="Theme.SplashScreen">
+        <item name="android:windowBackground">@color/white</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/bg_splash</item>
+        <item name="postSplashScreenTheme">@style/Theme.Skinfinity</item>
+    </style>
 </resources>
