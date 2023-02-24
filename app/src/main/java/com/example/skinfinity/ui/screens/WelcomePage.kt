@@ -20,7 +20,7 @@ import com.example.skinfinity.ui.theme.OpenSans
 
 @Composable
 fun WelcomePage(
-    navigateToSignUp: () -> Unit
+    navigateToLogin: () -> Unit
 ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
         Row(
@@ -60,7 +60,7 @@ fun WelcomePage(
         }
         Spacer(Modifier.height(30.dp))
         Button(
-            onClick = navigateToSignUp,
+            onClick = navigateToLogin,
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = Color(0xFFFF9999),
                 contentColor = Color.White

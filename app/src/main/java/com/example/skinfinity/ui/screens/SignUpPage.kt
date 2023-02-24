@@ -20,6 +20,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -35,6 +36,11 @@ fun SignUpPage(
     vm: AuthViewModel = viewModel(),
     navController: NavHostController
 ) {
+    LaunchedEffect(vm.authUiState) {
+        if (vm.authUiState == AuthUiState.Success) {
+            navController.navigate(Screen.EmailVerification.route)
+        }
+    }
     Box(
         Modifier
             .fillMaxSize()
@@ -96,7 +102,6 @@ fun SignUpInput(
     viewModel: AuthViewModel,
     navController: NavHostController
 ) {
-    val authUiState = viewModel.authUiState
     Card(
         modifier = Modifier
             .size(width = 600.dp, height = 800.dp)
@@ -130,7 +135,8 @@ fun SignUpInput(
                 text = viewModel.password,
                 onValueChange = { value -> viewModel.password = value },
                 id = R.drawable.carbon_password,
-                placeholder = "Password"
+                placeholder = "Password",
+                visualTransformation = PasswordVisualTransformation()
             )
 
             Row(Modifier.padding(top = 15.dp)) {
@@ -147,12 +153,7 @@ fun SignUpInput(
             }
 
             Button(
-                onClick = {
-                    viewModel.signUpClick()
-                    if (authUiState != AuthUiState.Error) {
-                        navController.navigate(Screen.EmailVerification.route)
-                    }
-                },
+                onClick = { viewModel.signUpClick() },
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = Color(0xFFFF9999),
                     contentColor = Color.White
@@ -187,13 +188,14 @@ fun AuthField(
     text: TextFieldValue,
     onValueChange: (TextFieldValue) -> Unit,
     @DrawableRes id: Int,
-    placeholder: String
+    placeholder: String,
+    visualTransformation: VisualTransformation = VisualTransformation.None
 ) {
     TextField(
         value = text,
         onValueChange = onValueChange,
         colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = Color.White,
+            backgroundColor = MaterialTheme.colors.background,
             textColor = MaterialTheme.colors.onSurface
         ),
         modifier = Modifier.padding(top = 25.dp),
@@ -201,10 +203,9 @@ fun AuthField(
             Icon(
                 painterResource(id = id),
                 contentDescription = null,
-                tint = MaterialTheme.colors.onSurface
             )
         },
         placeholder = { Text(placeholder, color = Color(0xFF94A3B8), fontFamily = OpenSans) },
-        visualTransformation = PasswordVisualTransformation()
+        visualTransformation = visualTransformation
     )
 }
