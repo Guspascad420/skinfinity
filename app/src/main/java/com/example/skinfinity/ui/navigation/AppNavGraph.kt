@@ -5,10 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.skinfinity.ui.screens.EmailVerificationPage
-import com.example.skinfinity.ui.screens.LoginPage
-import com.example.skinfinity.ui.screens.SignUpPage
-import com.example.skinfinity.ui.screens.WelcomePage
+import com.example.skinfinity.ui.screens.*
 
 @Composable
 fun SkinfinityApp(navController: NavHostController = rememberNavController()) {
@@ -22,17 +19,23 @@ fun AppNavHost(
     NavHost(navController = navController, startDestination = Screen.WelcomePage.route) {
         composable(route = Screen.WelcomePage.route) {
             WelcomePage(
-                navigateToSignUp = { navController.navigate(Screen.SignUp.route) }
+                navigateToLogin = { navController.navigate(Screen.Login.route) }
             )
         }
         composable(route = Screen.SignUp.route) {
             SignUpPage(navController = navController)
         }
         composable(route = Screen.Login.route) {
-            LoginPage()
+            LoginPage(
+                navigateToSignUp = { navController.navigate(Screen.SignUp.route) },
+                navigateToHome = { navController.navigate(Screen.Home.route) }
+            )
         }
         composable(route = Screen.EmailVerification.route) {
             EmailVerificationPage(navController = navController)
+        }
+        composable(route = Screen.Home.route) {
+            HomeScreen()
         }
     }
 }
