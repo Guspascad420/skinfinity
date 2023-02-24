@@ -20,7 +20,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -151,7 +150,7 @@ fun SignUpInput(
                 onClick = {
                     viewModel.signUpClick()
                     if (authUiState != AuthUiState.Error) {
-                        navController.navigate(Screen.Login.route)
+                        navController.navigate(Screen.EmailVerification.route)
                     }
                 },
                 colors = ButtonDefaults.buttonColors(
