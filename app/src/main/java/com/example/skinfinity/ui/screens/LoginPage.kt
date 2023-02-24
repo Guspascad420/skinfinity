@@ -26,7 +26,16 @@ import com.example.skinfinity.ui.AuthViewModel
 import com.example.skinfinity.ui.theme.OpenSans
 
 @Composable
-fun LoginPage(vm: AuthViewModel = viewModel()) {
+fun LoginPage(
+    vm: AuthViewModel = viewModel(),
+    navigateToSignUp: (Int) -> Unit,
+    navigateToHome: () -> Unit
+) {
+//    LaunchedEffect(vm.authUiState) {
+//        if (vm.authUiState == AuthUiState.Success) {
+//
+//        }
+//    }
     Box(
         Modifier
             .fillMaxSize()
@@ -61,14 +70,22 @@ fun LoginPage(vm: AuthViewModel = viewModel()) {
                     shape = RoundedCornerShape(20.dp)
                 ) {
                 }
-                LoginInput(viewModel = vm)
+                LoginInput(
+                    viewModel = vm,
+                    navigateToSignUp = navigateToSignUp,
+                    navigateToHome = navigateToHome
+                )
             }
         }
     }
 }
 
 @Composable
-fun LoginInput(viewModel: AuthViewModel) {
+fun LoginInput(
+    viewModel: AuthViewModel,
+    navigateToSignUp: (Int) -> Unit,
+    navigateToHome: () -> Unit
+) {
     Card(
         modifier = Modifier
             .size(width = 600.dp, height = 800.dp)
@@ -99,7 +116,9 @@ fun LoginInput(viewModel: AuthViewModel) {
             )
 
             Row(
-                Modifier.padding(top = 15.dp).fillMaxWidth(),
+                Modifier
+                    .padding(top = 15.dp)
+                    .fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
             ) {
                 ClickableText(
@@ -115,7 +134,7 @@ fun LoginInput(viewModel: AuthViewModel) {
             }
 
             Button(
-                onClick = { },
+                onClick = navigateToHome,
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = Color(0xFFFF9999),
                     contentColor = Color.White
@@ -137,7 +156,7 @@ fun LoginInput(viewModel: AuthViewModel) {
                         color = Color(0xFFFF9999),
                         fontFamily = OpenSans
                     ),
-                    onClick = { }
+                    onClick = navigateToSignUp
                 )
             }
 
