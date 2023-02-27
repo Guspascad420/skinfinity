@@ -104,12 +104,12 @@ fun SignUpInput(
 ) {
     Card(
         modifier = Modifier
-            .size(width = 600.dp, height = 800.dp)
-            .padding(top = 15.dp),
+            .size(width = 600.dp, height = 1000.dp)
+            .padding(top = 6.dp),
         shape = RoundedCornerShape(20.dp)
     ) {
 
-        Column(Modifier.padding(top = 25.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(Modifier.padding(top = 15.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             Row {
                 Text(
                     "Sign Up",
