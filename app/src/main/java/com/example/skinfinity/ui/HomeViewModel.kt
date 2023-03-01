@@ -30,3 +30,10 @@ class HomeViewModel : ViewModel() {
         return greeting
     }
 }
+
+class AppScreenIcon(
+    val name: String,
+    val iconId: Int,
+    val activeIconId: Int = 0,
+    val onClick: () -> Unit = { }
+)
