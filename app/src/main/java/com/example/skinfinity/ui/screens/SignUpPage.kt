@@ -108,7 +108,6 @@ fun SignUpInput(
             .padding(top = 6.dp),
         shape = RoundedCornerShape(20.dp)
     ) {
-
         Column(Modifier.padding(top = 15.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             Row {
                 Text(
@@ -118,7 +117,6 @@ fun SignUpInput(
                     fontSize = 22.sp,
                 )
             }
-
             AuthField(
                 text = viewModel.fullName,
                 onValueChange = { value -> viewModel.fullName = value },
