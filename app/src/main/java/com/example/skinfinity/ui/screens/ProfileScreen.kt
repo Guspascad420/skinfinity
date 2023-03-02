@@ -51,13 +51,13 @@ fun ProfileScreen(navController: NavHostController) {
                     color = if (isSystemInDarkTheme()) Color.White else Color(0xFF475569)
                 )
             }
-            AccountSettings()
+            AccountSettings(navController = navController)
         }
     }
 }
 
 @Composable
-fun AccountSettings() {
+fun AccountSettings(navController: NavHostController) {
     val accountSettingsList = listOf(
         AppScreenIcon("Account details", R.drawable.as_profile),
         AppScreenIcon("Update password", R.drawable.as_password),
@@ -74,14 +74,17 @@ fun AccountSettings() {
             color = Color(0xFFFF6666)
         )
         accountSettingsList.forEach {
-            val color = if (it.name == "Login") Color.Red else MaterialTheme.colors.onSurface
+            val color = if (it.name == "Log out") Color.Red else MaterialTheme.colors.onSurface
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth().padding(top = 30.dp)
             ) {
                 Row {
-                    Icon(painterResource(it.iconId), null)
-                    Text("Account details", Modifier.padding(start = 8.dp), color = color)
+                    Icon(
+                        painterResource(it.iconId), null,
+                        Modifier.padding(top = 5.dp), tint = color
+                    )
+                    Text(it.name, Modifier.padding(start = 15.dp), color = color)
                 }
                 Icon(Icons.Default.KeyboardArrowRight, null, tint = color)
             }
