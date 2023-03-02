@@ -17,14 +17,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.skinfinity.R
 import com.example.skinfinity.ui.theme.OpenSans
 
 @Composable
-fun TodoListScreen() {
-    Scaffold(topBar = { TodoTopAppBar() }) {
+fun TodoListScreen(navController: NavHostController) {
+    Scaffold(topBar = { TodoTopAppBar() }, bottomBar = { BottomAppBar(navController, "Home") }) {
         LazyColumn(Modifier.padding(it)) {
-            
+
         }
     }
 }

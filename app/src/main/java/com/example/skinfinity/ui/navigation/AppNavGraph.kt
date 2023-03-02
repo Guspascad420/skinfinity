@@ -41,7 +41,7 @@ fun AppNavHost(
             ProfileScreen(navController = navController)
         }
         composable(route = Screen.TodoList.route) {
-            TodoListScreen()
+            TodoListScreen(navController = navController)
         }
     }
 }
