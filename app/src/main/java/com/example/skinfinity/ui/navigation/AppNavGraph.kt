@@ -9,39 +9,52 @@ import com.example.skinfinity.ui.screens.*
 
 @Composable
 fun SkinfinityApp(navController: NavHostController = rememberNavController()) {
-    AppNavHost(navController = navController)
+    AppNavHost(navController)
 }
 
 @Composable
 fun AppNavHost(
     navController: NavHostController
 ) {
-    NavHost(navController = navController, startDestination = Screen.WelcomePage.route) {
-        composable(route = Screen.WelcomePage.route) {
+    NavHost(navController, startDestination = Screen.WelcomePage.route) {
+        composable(Screen.WelcomePage.route) {
             WelcomePage(
                 navigateToLogin = { navController.navigate(Screen.Login.route) }
             )
         }
-        composable(route = Screen.SignUp.route) {
+        composable(Screen.SignUp.route) {
             SignUpPage(navController = navController)
         }
-        composable(route = Screen.Login.route) {
+        composable(Screen.Login.route) {
             LoginPage(
                 navigateToSignUp = { navController.navigate(Screen.SignUp.route) },
                 navigateToHome = { navController.navigate(Screen.Home.route) }
             )
         }
-        composable(route = Screen.EmailVerification.route) {
-            EmailVerificationPage(navController = navController)
+        composable(Screen.EmailVerification.route) {
+            EmailVerificationPage(navController)
         }
-        composable(route = Screen.Home.route) {
+        composable(Screen.Home.route) {
             HomeScreen(navController = navController)
         }
-        composable(route = Screen.Profile.route) {
-            ProfileScreen(navController = navController)
+        composable(Screen.Profile.route) {
+            ProfileScreen(navController)
         }
-        composable(route = Screen.TodoList.route) {
-            TodoListScreen(navController = navController)
+        composable(Screen.TodoList.route + "/{activeDay}") { backStackEntry ->
+            val activeDay = backStackEntry.arguments?.getString("activeDay")
+            TodoListScreen(navController, activeDay.toString())
+        }
+        composable(Screen.AddTodo.route) {
+            AddTodo(navController)
+        }
+        composable(Screen.Consult.route) {
+            ConsultScreen(navController)
+        }
+        composable(Screen.Goals.route) {
+            GoalsScreen(navController)
+        }
+        composable(Screen.AddGoals.route) {
+            AddGoals(navController)
         }
     }
 }
