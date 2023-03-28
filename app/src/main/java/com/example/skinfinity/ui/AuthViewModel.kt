@@ -1,6 +1,7 @@
 package com.example.skinfinity.ui
 
 import android.util.Log
+import android.util.Patterns
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -27,6 +28,8 @@ class AuthViewModel : ViewModel() {
     var fullName by mutableStateOf(TextFieldValue(""))
     var email by mutableStateOf(TextFieldValue(""))
     var password by mutableStateOf(TextFieldValue(""))
+    var isValidPassword by mutableStateOf(true)
+    var isValidEmail by mutableStateOf(true)
     private val auth: FirebaseAuth = Firebase.auth
 
     var authUiState: AuthUiState by mutableStateOf(AuthUiState.Default)
@@ -89,5 +92,21 @@ class AuthViewModel : ViewModel() {
                     }
             }
         }
+    }
+
+    fun handlePasswordInput() {
+        if (password.text.length < 8) {
+            isValidPassword = false
+            return
+        }
+        isValidPassword = true
+    }
+
+    fun handleEmailInput() {
+        if (!Patterns.EMAIL_ADDRESS.matcher(email.text).matches()) {
+            isValidEmail = false
+            return
+        }
+        isValidEmail = true
     }
 }

@@ -4,11 +4,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Card
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -22,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.skinfinity.R
+import com.example.skinfinity.ui.AuthUiState
 import com.example.skinfinity.ui.AuthViewModel
 import com.example.skinfinity.ui.theme.OpenSans
 
@@ -31,11 +30,11 @@ fun LoginPage(
     navigateToSignUp: (Int) -> Unit,
     navigateToHome: () -> Unit
 ) {
-//    LaunchedEffect(vm.authUiState) {
-//        if (vm.authUiState == AuthUiState.Success) {
-//
-//        }
-//    }
+    LaunchedEffect(vm.authUiState) {
+        if (vm.authUiState == AuthUiState.Success) {
+            navigateToHome()
+        }
+    }
     Box(
         Modifier
             .fillMaxSize()
@@ -101,7 +100,17 @@ fun LoginInput(
                     fontSize = 22.sp,
                 )
             }
-
+            if (!viewModel.isValidEmail) {
+                Text(
+                    "Please enter a valid email!", fontFamily = OpenSans,
+                    color = MaterialTheme.colors.error
+                )
+            } else if (viewModel.authUiState == AuthUiState.Error) {
+                Text(
+                    "Invalid Email / Password", fontFamily = OpenSans,
+                    color = MaterialTheme.colors.error
+                )
+            }
             AuthField(
                 text = viewModel.email,
                 onValueChange = { value -> viewModel.email = value },
@@ -134,7 +143,12 @@ fun LoginInput(
             }
 
             Button(
-                onClick = navigateToHome,
+                onClick = {
+                    viewModel.handleEmailInput()
+                    if (viewModel.isValidEmail) {
+                        viewModel.loginClick()
+                    }
+                },
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = Color(0xFFFF9999),
                     contentColor = Color.White
@@ -142,7 +156,8 @@ fun LoginInput(
                 shape = RoundedCornerShape(15.dp),
                 modifier = Modifier
                     .size(width = 220.dp, height = 70.dp)
-                    .padding(top = 22.dp)
+                    .padding(top = 22.dp),
+                enabled = viewModel.email.text != "" && viewModel.password.text != ""
             ) {
                 Text("Login", fontSize = 20.sp)
             }

@@ -38,7 +38,7 @@ fun SignUpPage(
 ) {
     LaunchedEffect(vm.authUiState) {
         if (vm.authUiState == AuthUiState.Success) {
-            navController.navigate(Screen.EmailVerification.route)
+            navController.navigate(Screen.Home.route)
         }
     }
     Box(
@@ -109,12 +109,22 @@ fun SignUpInput(
         shape = RoundedCornerShape(20.dp)
     ) {
         Column(Modifier.padding(top = 15.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-            Row {
+            Text(
+                "Sign Up",
+                fontFamily = OpenSans,
+                fontWeight = FontWeight.Bold,
+                fontSize = 22.sp,
+            )
+            if (!viewModel.isValidEmail) {
                 Text(
-                    "Sign Up",
-                    fontFamily = OpenSans,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 22.sp,
+                    "Please enter a valid email!", fontFamily = OpenSans,
+                    color = MaterialTheme.colors.error
+                )
+            }
+            if (!viewModel.isValidPassword) {
+                Text(
+                    "Password must be at least 8 characters length!", fontFamily = OpenSans,
+                    color = MaterialTheme.colors.error
                 )
             }
             AuthField(
@@ -151,7 +161,13 @@ fun SignUpInput(
             }
 
             Button(
-                onClick = { viewModel.signUpClick() },
+                onClick = {
+                    viewModel.handlePasswordInput()
+                    viewModel.handleEmailInput()
+                    if (viewModel.isValidEmail && viewModel.isValidPassword) {
+                        viewModel.signUpClick()
+                    }
+                },
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = Color(0xFFFF9999),
                     contentColor = Color.White
@@ -176,7 +192,6 @@ fun SignUpInput(
                     onClick = { navController.navigate(Screen.Login.route) }
                 )
             }
-
         }
     }
 }
